@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BYD O'zbekiston Web Application</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandCyan: '#2fd5f6',
+                        darkBg: '#080b11',
+                        cardDark: 'rgba(15, 21, 32, 0.75)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #080b11;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(15, 21, 32, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .glass-card-hover:hover {
+            border-color: rgba(47, 213, 246, 0.4);
+            box-shadow: 0 0 25px rgba(47, 213, 246, 0.15);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #2fd5f6;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px #2fd5f6;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(47, 213, 246, 0.1), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(47, 213, 246, 0.6) !important;
+            box-shadow: 0 15px 35px -5px rgba(47, 213, 246, 0.25), 0 0 15px rgba(47, 213, 246, 0.15) !important;
+        }
+
+        .feature-card:hover .icon-box {
+            transform: scale(1.1) rotate(5deg);
+            background-color: rgba(47, 213, 246, 0.2);
+            border-color: rgba(47, 213, 246, 0.8);
+            box-shadow: 0 0 15px rgba(47, 213, 246, 0.4);
+        }
+
+        .feature-card:hover .stat-text {
+            text-shadow: 0 0 12px rgba(47, 213, 246, 0.6);
+        }
+
+        .icon-box, .stat-text {
+            transition: all 0.3s ease;
+        }
+
+        /* Yurish sharoiti tugmalari hover va aktiv holatlari */
+        .cond-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .cond-btn:hover, .cond-btn.active-cond {
+            background-color: rgba(47, 213, 246, 0.1);
+            border-color: rgba(47, 213, 246, 0.8) !important;
+            box-shadow: 0 0 15px rgba(47, 213, 246, 0.2);
+        }
+
+        .cond-btn:hover .cond-title, .cond-btn.active-cond .cond-title {
+            color: #2fd5f6 !important;
+        }
+    </style>
+</head>
+<body class="selection:bg-brandCyan selection:text-black">
+
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#080b11] via-[#080b11]/80 to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#080b11] via-transparent to-[#080b11] z-10"></div>
+        <img src="https://bydzone.uz/wp-content/uploads/2024/02/black-02-7-min.png" 
+             alt="BYD Background" 
+             class="w-full h-full object-cover object-right filter brightness-75">
+    </div>
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-brandCyan/10 border border-brandCyan/30 flex items-center justify-center text-brandCyan">
+                    <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-widest leading-none">BYD</span>
+                    <span class="text-[10px] font-bold text-gray-400 tracking-wider mt-0.5">O'ZBEKISTON</span>
+                </div>
+            </div>
+
+            <nav class="flex space-x-10 text-sm font-semibold text-gray-300">
+                <a href="#models" class="nav-link relative py-1 hover:text-white transition-colors duration-200">Modellar</a>
+                <a href="#calculator" class="nav-link relative py-1 hover:text-white transition-colors duration-200">Kalkulyator</a>
+                <a href="#estimator" class="nav-link relative py-1 hover:text-white transition-colors duration-200">Masofa</a>
+                <a href="#contact" class="nav-link relative py-1 hover:text-white transition-colors duration-200">Kontaktlar</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="min-h-screen pt-32 pb-20 max-w-7xl mx-auto px-8 flex flex-col justify-between">
+        <div class="max-w-2xl my-auto">
+            <div class="inline-flex items-center space-x-2 bg-brandCyan/10 border border-brandCyan/20 rounded-full px-3.5 py-1 mb-6">
+                <span class="w-2 h-2 rounded-full bg-brandCyan animate-pulse"></span>
+                <span class="text-xs font-bold text-brandCyan tracking-wider uppercase">BESTSELLER · DM-I</span>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-extrabold tracking-tight leading-none mb-6">
+                BYD Song Plus
+            </h1>
+
+            <h2 class="text-xl font-bold text-gray-200 mb-2">Oilaviy gibrid SUV</h2>
+            <p class="text-gray-400 text-base leading-relaxed mb-8 max-w-xl">
+                Song Plus DM-i — BYD ning eng mashhur gibrid modeli. Tejamkor, ishonchli va keng salonli oilaviy avtomobil. Shahar va uzoq yo'l uchun ideal.
+            </p>
+
+            <div class="flex items-center space-x-4 mb-10">
+                <button onclick="openCarModal('BYD Song Plus DM-i', '$24,900', '120 km', '197 ot k.', '30 daq.')" class="bg-brandCyan hover:bg-cyan-300 text-black font-extrabold px-8 py-4 rounded-2xl text-sm transition shadow-lg shadow-brandCyan/20">
+                    Batafsil ko'rish
+                </button>
+                <a href="#models" class="glass-card hover:bg-white/10 text-white font-bold px-8 py-4 rounded-2xl text-sm transition border border-white/10 inline-block">
+                    Barcha modellar
+                </a>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 max-w-lg">
+                <div class="bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <span class="text-gray-400 text-[11px] font-medium leading-tight mb-1">Yurish masofasi</span>
+                    <div class="text-white text-2xl font-bold leading-tight mb-0.5">120</div>
+                    <span class="text-gray-500 text-[10px] leading-tight">km (EV) / 1200 km (gibrid)</span>
+                </div>
+
+                <div class="bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <span class="text-gray-400 text-[11px] font-medium leading-tight mb-1">Tezlanish</span>
+                    <div class="text-white text-2xl font-bold leading-tight mb-0.5">7.9</div>
+                    <span class="text-gray-500 text-[10px] leading-tight">0→100 km/soat</span>
+                </div>
+
+                <div class="bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <span class="text-gray-400 text-[11px] font-medium leading-tight mb-1">Quvvat</span>
+                    <div class="text-white text-2xl font-bold leading-tight mb-0.5">197</div>
+                    <span class="text-gray-500 text-[10px] leading-tight">ot kuchi</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 max-w-7xl mx-auto px-8">
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="feature-card glass-card rounded-3xl p-8 min-h-[255px] flex flex-col justify-between border-white/10">
+                <div class="flex items-start justify-between">
+                    <div class="icon-box w-20 h-20 rounded-2xl bg-brandCyan/10 border border-brandCyan/30 flex items-center justify-center text-brandCyan">
+                        <i data-lucide="battery-full" class="w-10 h-10"></i>
+                    </div>
+                    <span class="stat-text text-4xl md:text-5xl font-black text-brandCyan tracking-tight">745 km</span>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-2xl font-extrabold mb-2">Uzoq yurish masofasi</h3>
+                    <p class="text-gray-400 text-base">745 km gacha CLTC yurish masofasi</p>
+                </div>
+            </div>
+
+            <div class="feature-card glass-card rounded-3xl p-8 min-h-[255px] flex flex-col justify-between border-white/10">
+                <div class="flex items-start justify-between">
+                    <div class="icon-box w-20 h-20 rounded-2xl bg-brandCyan/10 border border-brandCyan/30 flex items-center justify-center text-brandCyan">
+                        <i data-lucide="zap" class="w-10 h-10"></i>
+                    </div>
+                    <span class="stat-text text-4xl md:text-5xl font-black text-brandCyan tracking-tight">25 daq.</span>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-2xl font-extrabold mb-2">Tez quvvatlash</h3>
+                    <p class="text-gray-400 text-base">25 daqiqada 10% dan 80% gacha</p>
+                </div>
+            </div>
+
+            <div class="feature-card glass-card rounded-3xl p-8 min-h-[255px] flex flex-col justify-between border-white/10">
+                <div class="flex items-start justify-between">
+                    <div class="icon-box w-20 h-20 rounded-2xl bg-brandCyan/10 border border-brandCyan/30 flex items-center justify-center text-brandCyan">
+                        <i data-lucide="leaf" class="w-10 h-10"></i>
+                    </div>
+                    <span class="stat-text text-4xl md:text-5xl font-black text-brandCyan tracking-tight">0 CO₂</span>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-2xl font-extrabold mb-2">Nol chiqindilar</h3>
+                    <p class="text-gray-400 text-base">Toza energiya, ekologik kelajak</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="models" class="py-24 max-w-7xl mx-auto px-8">
+        <div class="text-center mb-10">
+            <div class="inline-block bg-white/5 border border-white/10 rounded-full px-4 py-1 mb-4">
+                <span class="text-[11px] font-bold text-brandCyan tracking-wider uppercase">MODELLAR KATALOGI</span>
+            </div>
+            <h2 class="text-4xl md:text-6xl font-black tracking-tight mb-4">
+                O'zingizga mos <span class="text-brandCyan">BYD</span> ni toping
+            </h2>
+            <p class="text-gray-400 text-sm max-w-2xl mx-auto">
+                Elektro va gibrid modellarning to'liq assortimenti. Filtrlash orqali istalgan avtomobilni batafsil ko'rib chiqing.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2 mb-12">
+            <button onclick="filterCars('all')" class="filter-btn active bg-brandCyan text-black px-5 py-2 rounded-xl text-xs font-extrabold transition">Barchasi</button>
+            <button onclick="filterCars('ev')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">Elektro (EV)</button>
+            <button onclick="filterCars('dmi')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">Gibrid (DM-i)</button>
+            <button onclick="filterCars('premium')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">Premium</button>
+            <button onclick="filterCars('barcha-turlari')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">Barcha turlari</button>
+            <button onclick="filterCars('sedan')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">Sedanlar</button>
+            <button onclick="filterCars('suv')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">SUVlar</button>
+            <button onclick="filterCars('xetchbek')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">Xetchbeklar</button>
+            <button onclick="filterCars('flagship')" class="filter-btn bg-white/5 border border-white/10 text-gray-300 hover:text-white px-5 py-2 rounded-xl text-xs font-bold transition">Flagship SUV</button>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            
+            <div class="car-card dmi suv glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://cache1.arabwheels.sa/system/car_generation_pictures/2424/original/Left%20Front%20Side.?1750829672" alt="BYD Song Plus" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-brandCyan text-black text-[10px] font-black px-2.5 py-0.5 rounded-md uppercase">Bestseller</span>
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">DM-i</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Song Plus</h3>
+                    <p class="text-gray-400 text-xs mb-4">Oilaviy gibrid SUV</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">7.9 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">120 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">197 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">30 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$24,900</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Song Plus', '$24,900', '120 km', '197 ot k.', '30 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card ev sedan flagship glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://carnewschina.com/wp-content/uploads/2026/07/byd_da_han_official-1500x844.jpg" alt="BYD Han" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-brandCyan text-black text-[10px] font-black px-2.5 py-0.5 rounded-md uppercase">Flagship</span>
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">EV</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Han</h3>
+                    <p class="text-gray-400 text-xs mb-4">Flagship elektro sedan</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">3.9 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">715 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">517 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">25 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$38,900</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Han', '$38,900', '715 km', '517 ot k.', '25 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card ev sedan glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://fischer-automobile.de/fileadmin/user_upload/BYD_Seal_Highlights_01.png" alt="BYD Seal" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-brandCyan text-black text-[10px] font-black px-2.5 py-0.5 rounded-md uppercase">Yangi</span>
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">EV</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Seal</h3>
+                    <p class="text-gray-400 text-xs mb-4">Sport elektro sedan</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">3.8 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">650 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">523 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">26 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$33,500</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Seal', '$33,500', '650 km', '523 ot k.', '26 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card dmi premium suv flagship glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://qatar.yallamotor.com/_next/image?url=https%3A%2F%2Fymimg1.b8cdn.com%2Fresized%2Fcar_model%2F11792%2Fpictures%2F13421676%2Fwebp_listing_main_yangwang-u8-2023-02.webp&w=1920&q=75" alt="Yangwang U8" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-brandCyan text-black text-[10px] font-black px-2.5 py-0.5 rounded-md uppercase">Premium</span>
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">Premium</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">Yangwang U8</h3>
+                    <p class="text-gray-400 text-xs mb-4">Premium off-road flagman</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">3.6 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">1000 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">1195 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">30 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$98,000</span>
+                    </div>
+                    <button onclick="openCarModal('Yangwang U8', '$98,000', '1000 km', '1195 ot k.', '30 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card ev suv glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://aniq.uz/photos/news/0HifDrjDRVjLeU8.jpeg" alt="BYD Chazor" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">EV</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Chazor</h3>
+                    <p class="text-gray-400 text-xs mb-4">Shahar elektro SUV</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">7.9 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">520 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">201 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">28 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$21,500</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Chazor', '$21,500', '520 km', '201 ot k.', '28 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card ev suv glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://www.autodeal.com.ph/custom/car-model-photo/original/byd-tang-ev-662f320d23473.jpg" alt="BYD Tang" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">EV</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Tang</h3>
+                    <p class="text-gray-400 text-xs mb-4">7 o'rinli elektro SUV</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">4.4 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">635 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">517 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">25 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$42,900</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Tang', '$42,900', '635 km', '517 ot k.', '25 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card ev suv glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://images.topgear.com.ph/topgear/images/2026/02/12/byd-atto-3-2026-awd-443hp-01-1770863429.webp" alt="BYD Atto 3" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">EV</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Atto 3</h3>
+                    <p class="text-gray-400 text-xs mb-4">Kompakt elektro krossover</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">7.3 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">480 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">201 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">28 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$19,900</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Atto 3', '$19,900', '480 km', '201 ot k.', '28 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card ev xetchbek glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://assets.autobuzz.my/wp-content/uploads/2023/07/07161057/BYD-Dolphin-launch-Singapore-Thailand.jpg" alt="BYD Dolphin" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">EV</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Dolphin</h3>
+                    <p class="text-gray-400 text-xs mb-4">Shahar elektro xetchbek</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">7.0 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">410 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">174 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">30 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$16,500</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Dolphin', '$16,500', '410 km', '174 ot k.', '30 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="car-card dmi suv flagship glass-card glass-card-hover rounded-3xl overflow-hidden p-5 flex flex-col justify-between">
+                <div>
+                    <div class="h-48 rounded-2xl overflow-hidden relative mb-4">
+                        <img src="https://st.arenaev.com/news/22/08/byd-unveils-flagship-suv/-1242x621/arenaev_001.jpg" alt="BYD Frigate" class="w-full h-full object-cover">
+                        <span class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-gray-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-md border border-white/10">DM-i</span>
+                    </div>
+                    <h3 class="text-xl font-black mb-0.5">BYD Frigate</h3>
+                    <p class="text-gray-400 text-xs mb-4">Gibrid flagship SUV</p>
+                    
+                    <div class="grid grid-cols-2 gap-3 mb-5 text-xs bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="gauge" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">TEZLANISH</span>
+                                <span class="font-bold text-gray-200">4.7 soniya</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="navigation" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">MASOFA</span>
+                                <span class="font-bold text-gray-200">100 km</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVAT</span>
+                                <span class="font-bold text-gray-200">251 ot k.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="battery-charging" class="w-4 h-4 text-brandCyan"></i>
+                            <div>
+                                <span class="text-[9px] text-gray-500 uppercase block leading-none">QUVVATLASH</span>
+                                <span class="font-bold text-gray-200">25 daq.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end pt-3 border-t border-white/10">
+                    <div>
+                        <span class="text-[10px] text-gray-500 block">Dan</span>
+                        <span class="text-xl font-black text-brandCyan">$32,900</span>
+                    </div>
+                    <button onclick="openCarModal('BYD Frigate', '$32,900', '100 km', '251 ot k.', '25 daq.')" class="bg-white/5 hover:bg-brandCyan hover:text-black text-brandCyan px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center space-x-1 border border-brandCyan/20">
+                        <span>Batafsil</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="calculator" class="py-24 max-w-7xl mx-auto px-8">
+        <div class="text-center mb-12">
+            <div class="inline-block bg-white/5 border border-white/10 rounded-full px-4 py-1 mb-4">
+                <span class="text-[11px] font-bold text-brandCyan tracking-wider uppercase">TEJASH KALKULYATORI</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-3">
+                Elektromobil bilan <span class="text-brandCyan">qancha</span> tejasiz?
+            </h2>
+            <p class="text-gray-400 text-sm max-w-xl mx-auto">
+                Oylik yurish masofangizni kiriting va benzin bilan elektr quvvatlash xarajatlari tafovutini ko'ring.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-12 gap-8">
+            <div class="md:col-span-6 glass-card p-8 rounded-3xl space-y-6">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-bold text-gray-300">Oylik yurish masofasi</span>
+                    <span class="text-2xl font-black text-brandCyan" id="distText">1500 km</span>
+                </div>
+                <input type="range" id="distRange" min="200" max="5000" step="100" value="1500" 
+                       class="w-full accent-brandCyan bg-white/10 h-2 rounded-lg cursor-pointer">
+
+                <div class="space-y-4 pt-4">
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5 flex justify-between items-center">
+                        <span class="text-sm font-bold text-gray-300">Benzin (AI-80/92)</span>
+                        <span class="text-xl font-black text-orange-400" id="gasPrice">1,080,000 so'm</span>
+                    </div>
+                    <div class="bg-brandCyan/10 p-4 rounded-2xl border border-brandCyan/20 flex justify-between items-center">
+                        <span class="text-sm font-bold text-gray-300">Elektr quvvatlash</span>
+                        <span class="text-xl font-black text-brandCyan" id="evPrice">101,250 so'm</span>
+                    </div>
+                </div>
+
+                <div class="text-xs text-gray-500 space-y-1 pt-2">
+                    <p>• Benzin narxi: ~9,000 so'm / litr</p>
+                    <p>• Elektr narxi: ~450 so'm / kWh</p>
+                    <p>• O'rtacha benzin sarfi: 8 l/100km · EV sarfi: 15 kWh/100km</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-6 glass-card p-8 rounded-3xl flex flex-col justify-between">
+                <div>
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-wider block mb-2">Oylik tejov</span>
+                    <div class="text-5xl font-black text-brandCyan mb-2" id="savingsPrice">978,750 so'm</div>
+                    <span class="text-xs text-gray-400">Elektromobil bilan har oyda</span>
+                </div>
+
+                <div class="bg-white/5 p-6 rounded-2xl border border-white/5 my-6">
+                    <span class="text-xs text-gray-400 font-bold uppercase tracking-wider block mb-1">Yillik tejov</span>
+                    <div class="text-3xl font-black text-white" id="yearlySavings">11,745,000 so'm</div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white/5 p-4 rounded-2xl">
+                        <span class="text-[10px] text-gray-400 uppercase block">Benzin (yil)</span>
+                        <span class="text-lg font-bold text-orange-400" id="gasYearly">12,960,000 so'm</span>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-2xl">
+                        <span class="text-[10px] text-gray-400 uppercase block">Elektr (yil)</span>
+                        <span class="text-lg font-bold text-brandCyan" id="evYearly">1,215,000 so'm</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="estimator" class="py-12 max-w-7xl mx-auto px-8 mb-20">
+        <div class="text-center mb-12">
+            <div class="inline-block bg-white/5 border border-white/10 rounded-full px-4 py-1 mb-4">
+                <span class="text-[11px] font-bold text-brandCyan tracking-wider uppercase">MASOFA HISOBLAGICH</span>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-3">
+                Qancha <span class="text-brandCyan">yura olasiz?</span>
+            </h2>
+            <p class="text-gray-400 text-sm max-w-xl mx-auto">
+                Batareya foizi va yurish sharoitini tanlang — qancha masofa yurish mumkinligini bilib oling.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-12 gap-8">
+            <div class="md:col-span-7 glass-card p-8 rounded-3xl space-y-8">
+                <div>
+                    <label class="text-sm font-bold text-gray-300 block mb-3">Avtomobilni tanlang</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="px-4 py-2 rounded-xl text-xs font-bold bg-brandCyan text-black">BYD Song Plus</button>
+                        <button class="px-4 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">BYD Han</button>
+                        <button class="px-4 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">BYD Seal</button>
+                        <button class="px-4 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">Yangwang U8</button>
+                        <button class="px-4 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300">BYD Chazor</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between text-sm font-bold mb-3">
+                        <span class="text-gray-300">Batareya quvvati</span>
+                        <span class="text-brandCyan font-black text-lg" id="batText">80%</span>
+                    </div>
+                    <input type="range" id="batRange" min="5" max="100" value="80" 
+                           class="w-full accent-brandCyan bg-white/10 h-2 rounded-lg cursor-pointer">
+                </div>
+
+                <div>
+                    <label class="text-sm font-bold text-gray-300 block mb-3">Yurish sharoiti</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="setCondition('shahar')" id="condShahar" class="cond-btn p-4 rounded-2xl text-left cursor-pointer">
+                            <span class="cond-title block font-bold text-xs mb-1 text-white">Shahar</span>
+                            <span class="text-[10px] text-gray-400 block">Tez-tez to'xtash, past tezlik</span>
+                        </button>
+                        <button onclick="setCondition('aralash')" id="condAralash" class="cond-btn active-cond p-4 rounded-2xl text-left cursor-pointer">
+                            <span class="cond-title block font-bold text-xs mb-1 text-white">Aralash</span>
+                            <span class="text-[10px] text-gray-400 block">Shahar + shosse</span>
+                        </button>
+                        <button onclick="setCondition('shosse')" id="condShosse" class="cond-btn p-4 rounded-2xl text-left cursor-pointer">
+                            <span class="cond-title block font-bold text-xs mb-1 text-white">Shosse</span>
+                            <span class="text-[10px] text-gray-400 block">Yuqori tezlik, uzluksiz</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-5 glass-card p-8 rounded-3xl flex flex-col justify-between text-center">
+                <div class="my-auto py-6">
+                    <div class="w-40 h-40 rounded-full border-4 border-brandCyan/20 border-t-brandCyan mx-auto flex items-center justify-center flex-col mb-6">
+                        <span class="text-5xl font-black text-white" id="rangeOutput">96</span>
+                        <span class="text-xs font-bold text-brandCyan uppercase">km masofa</span>
+                    </div>
+
+                    <div class="space-y-3 text-xs text-left max-w-xs mx-auto border-t border-white/10 pt-4">
+                        <div class="flex justify-between"><span class="text-gray-400">Batareya:</span><span id="resBat" class="font-bold">80%</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Model:</span><span class="font-bold">BYD Song Plus</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Sharoit:</span><span id="resCond" class="font-bold">Aralash</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">To'liq masofa:</span><span class="font-bold">120 km</span></div>
+                    </div>
+                </div>
+                <p class="text-[10px] text-gray-500">Hisob-kitob taxminiy. Haqiqiy masofa harorat, havo sovutgich va yurish uslubiga qarab o'zgaradi.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-[#05070c] border-t border-white/10 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16">
+                <div class="md:col-span-5 space-y-5">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-brandCyan/10 border border-brandCyan/30 flex items-center justify-center text-brandCyan">
+                            <i data-lucide="zap" class="w-6 h-6 fill-current"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-2xl font-black tracking-widest leading-none">BYD</span>
+                            <span class="text-[10px] font-bold text-gray-400 tracking-wider mt-0.5">O'ZBEKISTON</span>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
+                        BYD — dunyodagi yetakchi elektromobil ishlab chiqaruvchisi. O'zbekiston bozorida eng so'nggi elektro va gibrid modellarni taqdim etamiz.
+                    </p>
+
+                    <div class="space-y-3 text-sm text-gray-300 pt-2">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="phone" class="w-4 h-4 text-brandCyan"></i>
+                            <span>+998 99 999 99 99</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="mail" class="w-4 h-4 text-brandCyan"></i>
+                            <span>info@byd.uz</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-brandCyan"></i>
+                            <span>Toshkent sh., Amir Temur ko'chasi 10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-white">MODELLAR</h4>
+                    <ul class="space-y-2.5 text-sm text-gray-400">
+                        <li><a href="#models" class="hover:text-brandCyan transition">BYD Song Plus</a></li>
+                        <li><a href="#models" class="hover:text-brandCyan transition">BYD Han</a></li>
+                        <li><a href="#models" class="hover:text-brandCyan transition">BYD Seal</a></li>
+                        <li><a href="#models" class="hover:text-brandCyan transition">Yangwang U8</a></li>
+                        <li><a href="#models" class="hover:text-brandCyan transition">BYD Chazor</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3 space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-white">XIZMATLAR</h4>
+                    <ul class="space-y-2.5 text-sm text-gray-400">
+                        <li><a href="#calculator" class="hover:text-brandCyan transition">Tejash kalkulyatori</a></li>
+                        <li><a href="#estimator" class="hover:text-brandCyan transition">Masofa hisoblagich</a></li>
+                        <li><a href="#contact" class="hover:text-brandCyan transition">Konsultatsiya</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-white">KOMPANIYA</h4>
+                    <ul class="space-y-2.5 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-brandCyan transition">Biz haqimizda</a></li>
+                        <li><a href="#" class="hover:text-brandCyan transition">Yangiliklar</a></li>
+                        <li><a href="#" class="hover:text-brandCyan transition">Dilerlar</a></li>
+                        <li><a href="#" class="hover:text-brandCyan transition">Karyera</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+                <p>© 2026 BYD O'zbekiston. Barcha huquqlar himoyalangan.</p>
+                <div class="flex space-x-3">
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-brandCyan/50 transition">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-brandCyan/50 transition">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-brandCyan/50 transition">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="carModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center hidden px-4">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-white/20 relative">
+            <button onclick="closeCarModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h3 id="modalTitle" class="text-2xl font-black text-brandCyan mb-6"></h3>
+            <div class="space-y-4 text-sm mb-6">
+                <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-gray-400">Boshlang'ich narxi:</span><span id="modalPrice" class="font-bold"></span></div>
+                <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-gray-400">Yurish masofasi:</span><span id="modalRange" class="font-bold"></span></div>
+                <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-gray-400">Dvigatel quvvati:</span><span id="modalPower" class="font-bold"></span></div>
+                <div class="flex justify-between border-b border-white/10 pb-2"><span class="text-gray-400">Quvvatlash vaqti:</span><span id="modalCharging" class="font-bold"></span></div>
+            </div>
+            <button onclick="closeCarModal()" class="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition">Yopish</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function filterCars(category) {
+            const cards = document.querySelectorAll('.car-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        const distRange = document.getElementById('distRange');
+        distRange.addEventListener('input', function() {
+            const val = this.value;
+            document.getElementById('distText').innerText = val + ' km';
+            
+            const gas = Math.round((val / 100) * 8 * 9000);
+            const ev = Math.round((val / 100) * 15 * 450);
+            const savings = gas - ev;
+
+            document.getElementById('gasPrice').innerText = gas.toLocaleString() + " so'm";
+            document.getElementById('evPrice').innerText = ev.toLocaleString() + " so'm";
+            document.getElementById('savingsPrice').innerText = savings.toLocaleString() + " so'm";
+            document.getElementById('yearlySavings').innerText = (savings * 12).toLocaleString() + " so'm";
+            document.getElementById('gasYearly').innerText = (gas * 12).toLocaleString() + " so'm";
+            document.getElementById('evYearly').innerText = (ev * 12).toLocaleString() + " so'm";
+        });
+
+        let currentCondition = 'aralash';
+        const batRange = document.getElementById('batRange');
+        
+        function updateRange() {
+            const bat = batRange.value;
+            document.getElementById('batText').innerText = bat + '%';
+            document.getElementById('resBat').innerText = bat + '%';
+            
+            let factor = 1.2;
+            if (currentCondition === 'shahar') factor = 1.3;
+            if (currentCondition === 'shosse') factor = 1.0;
+
+            const range = Math.round((bat / 100) * 100 * factor);
+            document.getElementById('rangeOutput').innerText = range;
+        }
+
+        function setCondition(cond) {
+            currentCondition = cond;
+            document.getElementById('resCond').innerText = cond.charAt(0).toUpperCase() + cond.slice(1);
+            
+            // Barcha tugmalardan active-cond sinfini olib tashlaymiz
+            document.querySelectorAll('.cond-btn').forEach(btn => btn.classList.remove('active-cond'));
+            
+            // Tanlangan tugmaga active-cond sinfini qo'shamiz
+            const btnId = 'cond' + cond.charAt(0).toUpperCase() + cond.slice(1);
+            document.getElementById(btnId).classList.add('active-cond');
+
+            updateRange();
+        }
+        batRange.addEventListener('input', updateRange);
+
+        function openCarModal(title, price, range, power, charging) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalRange').innerText = range;
+            document.getElementById('modalPower').innerText = power;
+            document.getElementById('modalCharging').innerText = charging;
+            document.getElementById('carModal').classList.remove('hidden');
+        }
+        function closeCarModal() { document.getElementById('carModal').classList.add('hidden'); }
+    </script>
+</body>
+</html>
